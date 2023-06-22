@@ -22,6 +22,11 @@ let reqInstance;
 
 let trackId;
 
+
+function generateRandomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 // Funkcja do dodawania logów do bazy danych
 async function addLog() {
   try {
@@ -29,15 +34,16 @@ async function addLog() {
     const log = {
       trackId: trackId,
       latitude: latitude,
-      longitude: longitude
+      longitude: longitude,
+      timestamp: Date.now()
     };
 
     await r.table('waypoints').insert(log).run(connection);
     console.log('Dodano waypoints log:', log);
     connection.close();
 
-    latitude += 0.000044
-    longitude += 0.000098
+    latitude += generateRandomNumber(-0.000044, 0.000044)
+    longitude += generateRandomNumber(0.000011, 0.000044)
 
   } catch (error) {
     console.error('Błąd podczas dodawania logu:', error);
