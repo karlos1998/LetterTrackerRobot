@@ -92,7 +92,7 @@ async function startTracking() {
 }
 
 async function stopTracking() {
-  return await reqInstance.post('http://localhost:3000/tracks/stop')
+  return await reqInstance.post('http://localhost:3000/tracks/stop', {trackId: trackId})
   .then(response => {
     console.log('Praca zakonczona', response.data)
   })
@@ -115,12 +115,12 @@ async function run() {
 
     await startTracking();
 
-    if(!trackId) {
-      console.log('Proba zakonczenia poprzedniej pracy...')
-      await stopTracking()
+    // if(!trackId) {
+    //   console.log('Proba zakonczenia poprzedniej pracy...')
+    //   await stopTracking()
 
-      await startTracking();
-    }
+    //   await startTracking();
+    // }
 
     if(trackId) {
       setInterval(addLog, 5000);
